@@ -4,20 +4,21 @@
 |Column|Type|Options|
 |------|----|-------|
 |nickname|string|null: false|
-|adress|integer|unique|
-|password|integer|precision: 10, scale: 5|
+|email|integer|unique: true, index: true|
+|password|integer|null: false|
 
 ### Association
 - has_many :messages
-- has_many :groups
+- has_many :groups_users
+- has_many :groups, through: :groups_users
 
 ## messagesテーブル
 |Column|Type|Options|
 |------|----|-------|
 |body|text|------|
 |image|string|-----|
-|group_id|integer|-----|
-|user_id|ineger|------|
+|group_id|integer|null: false, foreign_key: true|
+|user_id|ineger|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
@@ -29,7 +30,8 @@
 |name|string|-----|
 
 ### Association
-- belongs_to :user
+- has_many :users, through: :groups_users
+- has_many :groups_users
 - has_many :messages
 
 ## groups_usersテーブル
